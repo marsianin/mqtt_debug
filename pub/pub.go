@@ -5,6 +5,9 @@ import (
 	"fmt"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"time"
+	"crypto/tls"
+	"crypto/x509"
+	"io/ioutil"
 )
 
 var onConnect MQTT.OnConnectHandler = func(client MQTT.Client) {
@@ -33,14 +36,38 @@ func main() {
 	fmt.Printf("Username: %s\n", *userNameOpt)
 	fmt.Printf("Password: %s\n", *userPassOpt)
 
-	broker := "tcp://" + *serverAddrOpt + ":1883"
+	broker := "ssl://" + *serverAddrOpt + ":8883"
 	opts := MQTT.NewClientOptions().AddBroker(broker)
 	opts.SetClientID(*clientIDOpt)
 	opts.SetUsername(*userNameOpt)
 	opts.SetPassword(*userPassOpt)
+	opts.SetOnConnectHandler(onConnect)
+	opts.SetConnectionLostHandler(onConnectionLost)
+
+	certpool := x509.NewCertPool()
+	pemCerts, err := ioutil.ReadFile("certs/ca/ca.crt")
+
+	if err != nil {
+		panic(err)
+	}
+
+	certpool.AppendCertsFromPEM(pemCerts)
+
+	cer, err := tls.LoadX509KeyPair("certs/server.crt", "certs/server.key")
+	if err != nil {
+		panic(err)
+	}
+
+	tlsConfig := &tls.Config{
+		RootCAs: certpool,
+		Certificates: []tls.Certificate{cer},
+	}
+
+	opts.SetTLSConfig(tlsConfig)
 
 	c := MQTT.NewClient(opts)
-	if token := c.Connect(); token.Wait() && token.Error() != nil {
+	token := c.Connect()
+	if token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
 

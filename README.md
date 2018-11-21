@@ -15,3 +15,15 @@ run in command line:
 ```sh
 go run security/gen.go -p "<password>"
 ```
+
+#### Generate Root CA
+run in command line:
+```sh
+make gen-ca
+```
+
+#### Generate Client/Server cert
+run in command line:
+```sh
+make gen-server-cert
+```

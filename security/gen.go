@@ -14,6 +14,6 @@ func main() {
 	flag.Parse()
 
 	fmt.Printf("Password: %s\n", *passwordAddrOpt)
-	encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte("5U,Mp$DzHeZJEY;`:yhB"), 12)
+	encryptedPassword, _ := bcrypt.GenerateFromPassword([]byte(*passwordAddrOpt), 12)
 	fmt.Printf("Encrypted: %s\n", encryptedPassword)
 }

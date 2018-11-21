@@ -56,7 +56,7 @@ func main() {
 		panic(token.Error())
 	}
 
-	if token := c.Subscribe(*topicOpt, 1, nil); token.Wait() && token.Error() != nil {
+	if token := c.Subscribe(*topicOpt, 2, nil); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
