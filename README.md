@@ -40,38 +40,57 @@ SSL handshake:
 SSL_connect:before/connect initialization
 SSL_connect:unknown state
 SSL_connect:error in unknown state
+>>> TLS 1.2 Handshake [length 0139], ClientHello
 SSL_connect:SSLv3 read server hello A
+<<< TLS 1.2 Handshake [length 0057], ServerHello
 depth=1 C = RU, ST = Denial, L = Test, O = Test
 verify return:1
+<<< TLS 1.2 Handshake [length 070e], Certificate
 depth=0 C = RU, ST = Denial, L = Test, O = Test, CN = server.application
 verify return:1
 SSL_connect:SSLv3 read server certificate A
+<<< TLS 1.2 Handshake [length 019d], ServerKeyExchange
 SSL_connect:SSLv3 read server key exchange A
 SSL_connect:SSLv3 read server certificate request A
+<<< TLS 1.2 Handshake [length 0062], CertificateRequest
 SSL_connect:SSLv3 read server done A
+<<< TLS 1.2 Handshake [length 0004], ServerHelloDone
+>>> TLS 1.2 Handshake [length 070e], Certificate
 SSL_connect:SSLv3 write client certificate A
-0230 - 70 65 6e 53 53 4c 20 47-65 6e 65 72 61 74 65 64   penSSL Generated
 SSL_connect:SSLv3 write client key exchange A
+0230 - 70 65 6e 53 53 4c 20 47-65 6e 65 72 61 74 65 64   penSSL Generated
+>>> TLS 1.2 Handshake [length 0096], ClientKeyExchange
+>>> TLS 1.2 Handshake [length 0108], CertificateVerify
 SSL_connect:SSLv3 write certificate verify A
+>>> TLS 1.2 ChangeCipherSpec [length 0001]
 SSL_connect:SSLv3 write change cipher spec A
 SSL_connect:SSLv3 write finished A
 SSL_connect:SSLv3 flush data
 SSL_connect:error in SSLv3 read finished A
 SSL_connect:error in SSLv3 read finished A
+>>> TLS 1.2 Handshake [length 0010], Finished
+<<< TLS 1.2 ChangeCipherSpec [length 0001]
 SSL_connect:SSLv3 read finished A
+<<< TLS 1.2 Handshake [length 0010], Finished
 SSL handshake has read 2484 bytes and written 2604 bytes
 New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
 SSL-Session:
+    Protocol  : TLSv1.2
 SSL3 alert read:warning:close notify
+<<< TLS 1.2 Alert [length 0002], warning close_notify
 SSL3 alert write:warning:close notify
+>>> TLS 1.2 Alert [length 0002], warning close_notify
+
 ```
 
-####Verify cert content
-````sh
+#### Verify cert content
+```sh
  openssl x509 -noout -text -in certs/client.crt
- ````
+```
+
  Response
- ````sh
+
+```sh
  Certificate:
     Data:
         Version: 3 (0x2)
@@ -114,15 +133,16 @@ SSL3 alert write:warning:close notify
          5f:2a:79:7b:f1:42:f9:06:5c:92:e6:fa:af:14:14:37:6d:a4:
          81:0d:26:3f:99:1d:d0:f3:9c:aa:62:be:89:ba:1b:89:88:15:
 ...
+```
 
- ````
-
- #### Verify certificate request
- ````sh
+#### Verify certificate request
+```sh
 openssl req -noout -text -in certs/client.csr
 ```
+
 Result:
-````sh
+
+```sh
 Certificate Request:
     Data:
         Version: 0 (0x0)
@@ -143,4 +163,5 @@ Certificate Request:
          d6:5a:ed:07:16:4e:f4:34:33:60:cf:05:d1:74:cd:30:ac:bd:
          a7:d8:3a:b8:40:7d:07:b2:6b:da:98:90:64:d1:88:bc:20:21:
 ...
+
 ```
