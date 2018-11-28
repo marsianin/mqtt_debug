@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
-	"flag"
 )
 
 var (
