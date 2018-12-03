@@ -23,11 +23,11 @@ var (
 	serverAddrOpt = flag.String("s", "127.0.0.1", "MQTT server address")
 	clientIDOpt   = flag.String("i", "pub", "MQTT client ID")
 	topicOpt      = flag.String("t", "topic", "MQTT topic")
-	lwtTopicOpt   = flag.String("lwt_t", "topic", "MQTT LWT topic")
+	lwtTopicOpt   = flag.String("lwt_t", "", "MQTT LWT topic")
 	userNameOpt   = flag.String("u", "user", "MQTT user")
 	userPassOpt   = flag.String("p", "user", "MQTT pass")
 	messageOpt    = flag.String("m", "user", "MQTT pass")
-	lwtMessageOpt = flag.String("lwt_m", "user", "lwt MQTT pass")
+	lwtMessageOpt = flag.String("lwt_m", "", "lwt MQTT pass")
 )
 
 type DeviceInfo struct {

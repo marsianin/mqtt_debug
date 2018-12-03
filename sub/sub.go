@@ -82,7 +82,11 @@ func main() {
 		panic(token.Error())
 	}
 
-	if token := c.Subscribe(*topicOpt, 2, nil); token.Wait() && token.Error() != nil {
+	subHandler := func(c MQTT.Client, msg MQTT.Message) {
+		fmt.Printf("Get new item: \nTopic: %v, Payload:%v\n", msg.Topic(), msg.Payload())
+	}
+
+	if token := c.Subscribe(*topicOpt, 2, subHandler); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)
 	}
