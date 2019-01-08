@@ -20,7 +20,7 @@ var onConnectionLost MQTT.ConnectionLostHandler = func(client MQTT.Client, errms
 }
 
 var (
-	serverAddrOpt = flag.String("s", "127.0.0.1", "MQTT server address")
+	serverAddrOpt = flag.String("s", "127.0.0.1:8883", "MQTT server address")
 	clientIDOpt   = flag.String("i", "pub", "MQTT client ID")
 	topicOpt      = flag.String("t", "topic", "MQTT topic")
 	lwtTopicOpt   = flag.String("lwt_t", "", "MQTT LWT topic")
@@ -47,7 +47,7 @@ func main() {
 	fmt.Printf("Password: %s\n", *userPassOpt)
 	fmt.Printf("Message: %s\n", *messageOpt)
 
-	broker := "ssl://" + *serverAddrOpt + ":8883"
+	broker := "ssl://" + *serverAddrOpt
 	opts := MQTT.NewClientOptions().AddBroker(broker)
 	opts.SetClientID(*clientIDOpt)
 	opts.SetUsername(*userNameOpt)
