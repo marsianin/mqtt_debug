@@ -1,41 +1,59 @@
-#### Run subscriber
+# mqtt_debug
+
+## Setup using the admin API
+
+1. Create a device and generate certificates
+2. Place certificates in the `./certs` directory
+3. Run
+
+## Run subscriber
+
 run in command line:
+
 ```sh
-go run sub/sub.go -t "<topic_id>" -i "<client_id>" -u "<user_id>" -p '<password>'
+go run sub/sub.go -s "<server_ip>:<server_port>" -t "<topic_id>" -i "<client_id>" -u "<user_id>" -p '<password>'
 ```
 
-#### Run publisher
+## Run publisher
+
 run in command line:
+
 ```sh
-go run pub/pub.go -t "<topic_id>" -i "<client_id>" -u "<user_id>" -p '<password>'
+go run pub/pub.go -s "<server_ip>:<server_port>" -t "<topic_id>" -i "<client_id>" -u "<user_id>" -p '<password>'
 ```
 
-#### Generate VerneMQ password
-run in command line:
+## Generate VerneMQ password
+
+run in command line:`
+
 ```sh
 go run security/gen.go -p "<password>"
 ```
 
-#### Generate Root CA
+## Generate Root CA
+
 run in command line:
+
 ```sh
 make gen-ca
 ```
 
-#### Generate Client/Server cert
+## Generate Client/Server cert
+
 run in command line:
+
 ```sh
 make gen-server-cert
 ```
 
-
-### SSL debug
+## SSL debug
 
 ```sh
 openssl s_client -connect <host>:<port> -CAfile <ca cert file> -nbio -debug -msg -state -cert <cert> -key <secret key>
 ```
 
 SSL handshake:
+
 ```sh
 SSL_connect:before/connect initialization
 SSL_connect:unknown state
@@ -83,7 +101,8 @@ SSL3 alert write:warning:close notify
 
 ```
 
-#### Verify cert content
+## Verify cert content
+
 ```sh
  openssl x509 -noout -text -in certs/client.crt
 ```
@@ -135,7 +154,8 @@ SSL3 alert write:warning:close notify
 ...
 ```
 
-#### Verify certificate request
+## Verify certificate request
+
 ```sh
 openssl req -noout -text -in certs/client.csr
 ```
